@@ -8,7 +8,7 @@ body{
     font-family: "Noto Sans TC",sans-serif;
     font-weight: 300;
     font-size: 16px;
-    color: white;
+    color: black;
 }
 
 .main-body{
@@ -21,17 +21,40 @@ body{
 .main-text{
     display: block;
     text-align: center;
+    padding-top: 50px;
+    padding-bottom: 30px;
+
 }
 .main-text-header{
     border: 2px solid white;
+    padding: 10px;
+    color: white;
 }
 .main-div{
     background-color: white;
     height: 70vh;
-    width: 50vw;
-    position: absolute;
-    bottom: 15vh;
-    left: 50%;
-    transform: translate(-50%, 0);
+    width: 65vw;
     border-radius: 15px;
+    margin: auto;
 }
+
+.icon-div{
+    position: relative;
+}
+.icon-text{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transform: translate(-60px,10px);
+    font-size: larger;
+    font-weight: 600;
+
+}
+.icon-task{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    height: 50px;
+}
+
+
