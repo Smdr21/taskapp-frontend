@@ -18,43 +18,141 @@ body{
     background-position: bottom;
     position: relative;
 }
-.main-text{
+.title{
     display: block;
     text-align: center;
     padding-top: 50px;
     padding-bottom: 30px;
-
-}
-.main-text-header{
-    border: 2px solid white;
-    padding: 10px;
     color: white;
 }
-.main-div{
+.header-text{
+    border: 2px solid white;
+    padding: 10px;
+}
+.main-section{
     background-color: white;
     height: 70vh;
     width: 65vw;
     border-radius: 15px;
+    border: thick double #55A7D7;
     margin: auto;
+    display: flex;
+    
+}
+.main-div{
+    width: 63%;
+    border-right: 3px solid #55A7D7;
+}
+.main-div__text{
+    text-align: center;
+    padding: 10px 0;
+}
+.categories{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 30px;
+}
+.category{
+    font-size: 20px;
+    display: inline-block;
+    padding: 0 15px;
+}
+.category:before{
+    height: 17px;
+    width: 17px;
+    background-color: #55A7D7;
+    border-radius: 5px;
+    border: 2px double #55A7D7;
+    display: inline-block;
+    vertical-align: middle;
+    content: "";
+    margin: 0 10px 3px 0;
+    /*transform: translateY(-30px);
+    transition: all 2s ease-out;
+    */
+    animation-name: moveFromAbove;
+    animation-duration: 3s;
+    animation-timing-function: ease-out;
+    
+
 }
 
-.icon-div{
+.category:hover::before{
+    cursor: pointer;
+    
+}
+
+.category:active::before{
+    background-color: white;
+    display: inline-block;
+    transform: rotate(180deg);
+    box-shadow: 0 5px 10px rgba(0,0,0,.2);
+    transition: all 1s;
+    
+}
+
+@keyframes moveFromAbove {
+
+    0%{
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+
+
+    40%{
+        opacity: 1;
+        transform: translateY(-10);
+        transform: rotate(0);
+
+        
+    }
+    60%{
+        transform: rotate(30deg);
+    }
+
+    80%{
+        transform: translateY(0);
+        transform: rotate(-10deg);
+    }
+
+    100%{
+        transform: rotate(0);
+    }
+
+    
+}
+
+
+
+
+
+
+.sidebar{
+    width: 37%;
+}
+.navbar{
+    text-align: right;
+    vertical-align: middle;
     position: relative;
 }
 .icon-text{
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 20px;
     transform: translate(-60px,10px);
     font-size: larger;
     font-weight: 600;
 
 }
-.icon-task{
+.icon{
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 20px;
     height: 50px;
 }
-
+.icon:hover{
+    cursor: pointer;
+}
 
