@@ -13,7 +13,7 @@
     
     <title>Todolist- Organize your life</title>
 </head>
-<body>
+<body onload="onLoad()">
     <main class="main-body">
         <header>
             <h1 class="title">
@@ -25,70 +25,15 @@
             <div class="main-div">
                 <h1 class="main-div__text">My Tasks</h1>
                 <div class="categories">
-                    <span class="category">Health</span>
-                    <span class="category">Work</span>
-                    <span class="category">Social</span>
-                    <span class="category">Chores</span>
-                    <span class="category">Relax</span>
+                    <span class="category category1">Health</span>
+                    <span class="category category2">Work</span>
+                    <span class="category category3">Social</span>
+                    <span class="category category4">Chores</span>
+                    <span class="category category5">Relax</span>
                 </div>
                 <div class="task-box">
                     <h2 class="task-box-text">Todays Tasks</h2>
-                    <div class="task-items">
-                        <div class="task-item">
-                            <div class="task-name">
-                                <a>Go to the Gym</a>
-                            </div>
-                            <div class="task-date">
-                                <a>11th Jan</a>
-                                <a>15:00</a>
-                            </div>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-name">
-                                <a>Go to the Gym</a>
-                            </div>
-                            <div class="task-date">
-                                <a>11th Jan</a>
-                                <a>15:00</a>
-                            </div>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-name">
-                                <a>Go to the Gym</a>
-                            </div>
-                            <div class="task-date">
-                                <a>11th Jan</a>
-                                <a>15:00</a>
-                            </div>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-name">
-                                <a>Go to the Gym</a>
-                            </div>
-                            <div class="task-date">
-                                <a>11th Jan</a>
-                                <a>15:00</a>
-                            </div>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-name">
-                                <a>Go to the Gym</a>
-                            </div>
-                            <div class="task-date">
-                                <a>11th Jan</a>
-                                <a>15:00</a>
-                            </div>
-                        </div>
-                        <div class="task-item">
-                            <div class="task-name">
-                                <a>Go to the Gym</a>
-                            </div>
-                            <div class="task-date">
-                                <a>11th Jan</a>
-                                <a>15:00</a>
-                            </div>
-                        </div>
-                    </div>
+                    <div id="task-items" class="task-items"></div>
                 </div>
                 <div class="btn-box">
                     <a class="btn">View All Tasks</a>
@@ -97,24 +42,50 @@
             <div class="sidebar">
                 <nav class="navbar">
                     <span class="icon-text">Create new task</span>
-                    <image class="icon" src="/icons/iconmonstr-plus-6.svg" alt="create new icon"></image>
+                    <image class="icon" src="/icons/iconmonstr-plus-6.svg" alt="create new icon" onclick="addTask()"></image>
                 </nav>
                 <div class="view-task">
-                    <form>
-                        <input class="input-name" disabled=true value="Go to the Gym">
-                        <label class="input-label">Category</label>
-                        <input class="input-fields" disabled=true value="Sports">
-                        <label class="input-label">Due Date</label>
-                        <input class="input-fields input-date" type="date" value="2020-01-01" >
-                        <input class="input-fields input-time" type="time" value="12:00" >
-                        <label class="input-label">Description</label>
-                        <textarea class="input-fields input-description" cols="50" rows="5" disabled=true>I will go on the running machines for 30mins and then cycle for another 30mins</textarea>
-                    </form>
+                    <div id="empty-state">
+                        <image class="empty-state-image" src="/img/emptystate.png"></image>
+                    </div>
+                    <div id="form-box">
+                        <form id="form" method="POST">
+                            <input id="input-name" name="taskname" class="input-name" required type="text" placeholder="Please choose a task name">
+                            <image id="edit-icon" src="/icons/iconfinder_Pen_728966.svg" class="edit-icon"></image>
+
+                            <label class="input-label"><span>Category</span></label>
+                            <select id="input-category" class="select-categories" placeholder="Choose a Category">
+                                <option value="" disabled selected>Choose a Category</option>
+                                <option value="Health">Health</option>
+                                <option value="Work">Work</option>
+                                <option value="Chores">Chores</option>
+                                <option value="Social">Social</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <label class="input-label"><span>Due Date</span></label>
+                            <input id="input-duedate1" name="dueDate1" class="input-fields input-fields-edit input-date" type="date">
+                            <input id="input-duedate2" class="input-fields input-fields-edit input-time" type="time" value="12:00" >
+                            <label class="input-label"><span>Description</span></label>
+                            <textarea id="input-description"name="description" class="input-fields input-fields-edit input-description"></textarea>
+                            <div id="btn-save" class="btn--1">
+                                <a id="submit-form" class="btn" type="submit">Save Task</a>
+                            </div>
+                            <h2 id="error-message"class="error-message">One or more fields are missing</h2>
+                        </form>
+                    </div>
+                    <div id="btn-cancel">
+                        <a id="cancel-form" class="btn btn-cancel">Cancel Task</a>
+                    </div>
+                    <div id="btn-edit" class="btn--1">
+                        <a class="btn" onclick="onSubmit()">Edit Task</a>
+                    </div>
                 </div>
+                
             </div>
 
         </section>
     </main>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="/app.js"></script>
 </body>
 </html>
