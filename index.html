@@ -15,6 +15,17 @@
 </head>
 <body onload="onLoad()">
     <main class="main-body">
+        <div id="modal" class="modal-body">
+            <div class="modal-content">
+                <h2 class="modal-text">
+                    Are you sure you want to delete this task?
+                </h2>
+                <div class="modal-buttons">
+                    <button id="delete-reject"class="btn btn-modal" >No</button>
+                    <button id="delete-confirm" class="btn btn-modal">Yes</button></div>
+                
+            </div>
+        </div>
         <header>
             <h1 class="title">
                 <span class="header-text">TodoList</span>
@@ -29,7 +40,7 @@
                     <span class="category category2">Work</span>
                     <span class="category category3">Social</span>
                     <span class="category category4">Chores</span>
-                    <span class="category category5">Relax</span>
+                    <span class="category category5">Other</span>
                 </div>
                 <div class="task-box">
                     <h2 class="task-box-text">Todays Tasks</h2>
@@ -74,10 +85,13 @@
                         </form>
                     </div>
                     <div id="btn-cancel">
-                        <a id="cancel-form" class="btn btn-cancel">Cancel Task</a>
+                        <a id="cancel-form" class="btn btn-neg">Cancel</a>
                     </div>
                     <div id="btn-edit" class="btn--1">
-                        <a class="btn" onclick="onSubmit()">Edit Task</a>
+                        <a id="edit-form" class="btn" >Edit</a>
+                    </div>
+                    <div id="btn-delete">
+                        <a id="delete-form" class="btn btn-neg">Delete</a>
                     </div>
                 </div>
                 

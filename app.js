@@ -1,9 +1,16 @@
-// Function which is called when the page is loaded
 
+
+// Function which is called when the page is loaded
+var currentTaskId;
+var isEdit=false;
 const onLoad = () =>{
 
-    document.getElementById("submit-form").addEventListener('click',click);
-    document.getElementById("cancel-form").addEventListener('click',cancel);
+    document.getElementById("submit-form").addEventListener('click',submitForm);
+    document.getElementById("cancel-form").addEventListener('click',cancelForm);
+    document.getElementById("delete-form").addEventListener('click',deleteForm);
+    document.getElementById("edit-form").addEventListener('click',editForm);
+    document.getElementById("delete-confirm").addEventListener('click',deletedTask);
+    document.getElementById("delete-reject").addEventListener('click',cancelDelete);
     var todaysTask;
     axios.get("http://localhost:8081/").then((res,req)=>{
         console.log(res);
@@ -18,7 +25,7 @@ const onLoad = () =>{
 
 
 
-const click = (event) =>{
+const submitForm = (event) =>{
     var inputName = document.getElementById("input-name");
     var inputCategory = document.getElementById("input-category");
     var inputDueDate = document.getElementById("input-duedate1");
@@ -32,10 +39,16 @@ const click = (event) =>{
                   'description': inputdescription.value};
 
     if(validate(data)){
-
-        axios.post("http://localhost:8081/newtask",data).then((res,req)=>{})
-        .catch((err)=>{console.log(err);});
-        cancel();
+        if(!isEdit){
+            axios.post("http://localhost:8081/newtask",data).then((res,req)=>{})
+            .catch((err)=>{console.log(err);});
+            cancelForm();
+        }
+        else{
+            axios.post(`http://localhost:8081/edittask/${currentTaskId}`,data).then((res,req)=>{})
+            .catch((err)=>{console.log(err);});
+            cancelForm();
+        }
     }
     else{
         var errorMessage = document.querySelector("#error-message");
@@ -45,7 +58,8 @@ const click = (event) =>{
     
 };
 
-const cancel = (event) =>{
+
+const cancelForm = (event) =>{
     document.getElementById("form").reset();
     var formBox = document.querySelector("#form-box");
     var emptyState = document.querySelector("#empty-state");
@@ -57,6 +71,69 @@ const cancel = (event) =>{
     cancelButton.style["display"]="none";
 
 }
+
+const editForm = (event) =>{
+    console.log("Form has been edited");
+
+    var inputName = document.getElementById("input-name");
+    var inputCategory = document.getElementById("input-category");
+    var inputDueDate = document.getElementById("input-duedate1");
+    var inputDuetime = document.getElementById("input-duedate2");
+    var inputdescription = document.getElementById("input-description");
+
+    inputName.disabled=false;
+    inputCategory.disabled=false;
+    inputDueDate.disabled=false;
+    inputDuetime.disabled=false;
+    inputdescription.disabled=false;
+
+    addOrRemoveEditStyles(true);
+
+    var editButton = document.querySelector("#btn-edit");
+    editButton.style["display"]="none";
+
+    var deleteButton = document.querySelector("#btn-delete");
+    deleteButton.style["display"]="none";
+
+    var saveButton = document.querySelector("#btn-save");
+    saveButton.style["display"]="inline-block";
+
+    var cancelButton = document.querySelector("#btn-cancel");
+    cancelButton.style["display"]="inline-block";
+}
+
+const deleteForm = (event) =>{
+    console.log('DELETE WAS CLICKED')
+    var modal = document.querySelector("#modal");
+    modal.style["display"]="flex";
+
+}
+
+const deletedTask = () =>{
+    try{
+        axios.delete(`http://localhost:8081/task/${currentTaskId}`);
+    }
+    catch(err){
+        console.log(err);
+    }
+    var modal = document.querySelector("#modal");
+    modal.style["display"]="none";
+
+    var editButton = document.querySelector("#btn-edit");
+    editButton.style["display"]="none";
+
+    var deleteButton = document.querySelector("#btn-delete");
+    deleteButton.style["display"]="none";
+
+    cancelForm();
+    
+}
+
+const cancelDelete = () =>{
+    var modal = document.querySelector("#modal");
+    modal.style["display"]="none";
+}
+
 
 const validate= (data)=>{
     if(data.name==='') return false;
@@ -70,6 +147,9 @@ const validate= (data)=>{
 }
 
 const viewTask = async (id) =>{
+    isEdit=true;
+    var errorMessage = document.querySelector("#error-message");
+    errorMessage.style["display"]="none";
     var response;
     try{
         response = await axios.get(`http://localhost:8081/task/${id}`);
@@ -78,6 +158,8 @@ const viewTask = async (id) =>{
         console.log(error);
     }
     var data=response.data;
+    currentTaskId=data.id;
+    console.log(currentTaskId);
     var inputName = document.getElementById("input-name");
     var inputCategory = document.getElementById("input-category");
     var inputDueDate = document.getElementById("input-duedate1");
@@ -106,6 +188,12 @@ const viewTask = async (id) =>{
 
     var cancelButton = document.querySelector("#btn-cancel");
     cancelButton.style["display"]="none";
+
+    var editButton = document.querySelector("#btn-edit");
+    editButton.style["display"]="inline-block";
+
+    var deleteButton = document.querySelector("#btn-delete");
+    deleteButton.style["display"]="inline-block";
 
     var editIcon = document.querySelector("#edit-icon");
     editIcon.style["display"]="none";
@@ -175,6 +263,7 @@ const handleTasks = (doc) =>{
 };
 
 const addTask = () =>{
+    isEdit=false;
     addOrRemoveEditStyles(true);
     document.getElementById("form").reset();
     var inputName = document.getElementById("input-name");
@@ -201,6 +290,12 @@ const addTask = () =>{
 
     var cancelButton = document.querySelector("#btn-cancel");
     cancelButton.style["display"]="inline";
+
+    var editButton = document.querySelector("#btn-edit");
+    editButton.style["display"]="none";
+
+    var deleteButton = document.querySelector("#btn-delete");
+    deleteButton.style["display"]="none";
 
     var editIcon = document.querySelector("#edit-icon");
     editIcon.style["display"]="inline";
