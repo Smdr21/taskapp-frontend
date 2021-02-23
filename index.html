@@ -31,9 +31,23 @@
                 <span class="header-text">TodoList</span>
             </h1>
         </header>
-
         <section class="main-section">
-            <div class="main-div">
+            <div class="main-div" id="all-tasks">
+                <div class="task-box__all">
+                    <image id="back-button" src="icons/iconfinder_slice32_2835259.svg"/>
+                    <h2 class="task-box-text">All Tasks</h2>
+                    <div id="all-task-items" class="all-tasks"></div>
+                    <nav class="nav__all">
+                        <p class="text-header">90 items</p>
+                        <ul>
+                            <li class="page-list page-list__first" onclick="previousPage()"><image class="arrow-icon" src="/icons/iconmonstr-arrow-64.svg"/></li
+                            ><li class="page-list"><input id="page-number" type="number" value="1"></li
+                            ><li class="page-list page-list__last" onclick="nextPage()"><image class="arrow-icon" src="/icons/iconmonstr-arrow-63.svg"/></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="main-div" id="todays-tasks">
                 <h1 class="main-div__text">My Tasks</h1>
                 <div class="categories">
                     <span class="category category1">Health</span>
@@ -47,7 +61,7 @@
                     <div id="task-items" class="task-items"></div>
                 </div>
                 <div class="btn-box">
-                    <a class="btn">View All Tasks</a>
+                    <a class="btn" id="show-all-tasks">View All Tasks</a>
                 </div>
             </div>
             <div class="sidebar">

@@ -11,11 +11,13 @@ const onLoad = () =>{
     document.getElementById("edit-form").addEventListener('click',editForm);
     document.getElementById("delete-confirm").addEventListener('click',deletedTask);
     document.getElementById("delete-reject").addEventListener('click',cancelDelete);
+    document.getElementById("show-all-tasks").addEventListener('click',()=>toggleAllTasks(true));
+    document.getElementById("back-button").addEventListener('click',()=>toggleAllTasks(false));
     var todaysTask;
     axios.get("http://localhost:8081/").then((res,req)=>{
         console.log(res);
         if(res.data.length>0){
-            handleTasks(res.data);
+            handleTasks(res.data,false);
         }
     }).catch((err)=>{
         console.log(err);
@@ -224,7 +226,7 @@ const addOrRemoveEditStyles = (boolean) =>{
     };
 };
 
-const handleTasks = (doc) =>{
+const handleTasks = (doc,alltasks) =>{
     let colourMap = new Map();
     colourMap.set('Health', 1);
     colourMap.set('Work', 2);
@@ -232,6 +234,8 @@ const handleTasks = (doc) =>{
     colourMap.set('Social', 4);
     colourMap.set('Other', 5);
     console.log('I AM HERE');
+    var boxBefore = document.getElementById('all-task-items');
+    boxBefore.innerHTML='';
     doc.forEach(element => {
         var box = document.createElement('div');
         const itemNumber = colourMap.get(element.category);
@@ -254,11 +258,18 @@ const handleTasks = (doc) =>{
         date.appendChild(datetime);
         box.appendChild(name);
         box.appendChild(date);
-        
-        var setItem = document.getElementById('task-items');
-        setItem.appendChild(box);
         box.className="task-item item-"+itemNumber;
         box.addEventListener('click',()=>viewTask(element.id));
+        
+        if(alltasks){
+            var setItem = document.getElementById('all-task-items');
+            setItem.appendChild(box);
+        }
+        else{
+            var setItem = document.getElementById('task-items');
+            setItem.appendChild(box);
+            console.log('Its here')
+        }
         });
 };
 
@@ -304,9 +315,44 @@ const addTask = () =>{
 
 };
 
+const toggleAllTasks=(toggle)=>{
+    var alltasks = document.querySelector("#all-tasks");
+    var todaystasks = document.querySelector("#todays-tasks");
 
-const saveTask = (event) =>{
-    console.log('it is in here');
-    console.log(event);
+    if(toggle){
+        getTaskPagination();
+        alltasks.style["display"]="block";
+        todaystasks.style["display"]="none"; 
+    }
+    else{
+        alltasks.style["display"]="none";
+        todaystasks.style["display"]="block";
+    }
+}
 
+const getTaskPagination = (pageNumber=1) =>{
+    axios.get(`http://localhost:8081/alltasks?pageNumber=${pageNumber}`).then((res,req)=>{
+        console.log(res);
+        if(res.data.length>0){
+            handleTasks(res.data,true);
+        }
+    }).catch((err)=>{
+        console.log(err);
+    });
+}
+
+const nextPage = () => {
+    var form =document.getElementById('page-number');
+    var number = parseInt(form.value);
+    number++;
+    getTaskPagination(number);
+    form.value=number+'';
+}
+
+const previousPage = () => {
+    var form =document.getElementById('page-number');
+    var number = parseInt(form.value);
+    number--;
+    getTaskPagination(number);
+    form.value=number+'';
 }
