@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;700;900&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/icon-font.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="shortcut icon" type="image/png" href="img/favicon.png">
+    
+    <title>Todolist- Organize your life</title>
+</head>
+<body onload="onLoad()">
+    <main class="main-body">
+        <div id="modal" class="modal-body">
+            <div class="modal-content">
+                <h2 class="modal-text">
+                    Are you sure you want to delete this task?
+                </h2>
+                <div class="modal-buttons">
+                    <button id="delete-reject"class="btn btn-modal" >No</button>
+                    <button id="delete-confirm" class="btn btn-modal">Yes</button></div>
+                
+            </div>
+        </div>
+        <header>
+            <h1 class="title">
+                <span class="header-text">TodoList</span>
+            </h1>
+        </header>
+        <section class="main-section">
+            <div class="main-div" id="all-tasks">
+                <div class="task-box__all">
+                    <image id="back-button" src="icons/iconfinder_slice32_2835259.svg"/>
+                    <h2 class="task-box-text">All Tasks</h2>
+                    <div id="all-task-items" class="all-tasks"></div>
+                    <nav class="nav__all">
+                        <p class="text-header">90 items</p>
+                        <ul>
+                            <li class="page-list page-list__first" onclick="previousPage()"><image class="arrow-icon" src="/icons/iconmonstr-arrow-64.svg"/></li
+                            ><li class="page-list"><input id="page-number" type="number" value="1"></li
+                            ><li class="page-list page-list__last" onclick="nextPage()"><image class="arrow-icon" src="/icons/iconmonstr-arrow-63.svg"/></li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <div class="main-div" id="todays-tasks">
+                <h1 class="main-div__text">My Tasks</h1>
+                <div class="categories">
+                    <span class="category category1">Health</span>
+                    <span class="category category2">Work</span>
+                    <span class="category category3">Social</span>
+                    <span class="category category4">Chores</span>
+                    <span class="category category5">Other</span>
+                </div>
+                <div class="task-box">
+                    <h2 class="task-box-text">Todays Tasks</h2>
+                    <div id="task-items" class="task-items"></div>
+                </div>
+                <div class="btn-box">
+                    <a class="btn" id="show-all-tasks">View All Tasks</a>
+                </div>
+            </div>
+            <div class="sidebar">
+                <nav class="navbar">
+                    <span class="icon-text">Create new task</span>
+                    <image class="icon" src="/icons/iconmonstr-plus-6.svg" alt="create new icon" onclick="addTask()"></image>
+                </nav>
+                <div class="view-task">
+                    <div id="empty-state">
+                        <image class="empty-state-image" src="/img/emptystate.png"></image>
+                    </div>
+                    <div id="form-box">
+                        <form id="form" method="POST">
+                            <input id="input-name" name="taskname" class="input-name" required type="text" placeholder="Please choose a task name">
+                            <image id="edit-icon" src="/icons/iconfinder_Pen_728966.svg" class="edit-icon"></image>
+
+                            <label class="input-label"><span>Category</span></label>
+                            <select id="input-category" class="select-categories" placeholder="Choose a Category">
+                                <option value="" disabled selected>Choose a Category</option>
+                                <option value="Health">Health</option>
+                                <option value="Work">Work</option>
+                                <option value="Chores">Chores</option>
+                                <option value="Social">Social</option>
+                                <option value="Other">Other</option>
+                            </select>
+                            <label class="input-label"><span>Due Date</span></label>
+                            <input id="input-duedate1" name="dueDate1" class="input-fields input-fields-edit input-date" type="date">
+                            <input id="input-duedate2" class="input-fields input-fields-edit input-time" type="time" value="12:00" >
+                            <label class="input-label"><span>Description</span></label>
+                            <textarea id="input-description"name="description" class="input-fields input-fields-edit input-description"></textarea>
+                            <div id="btn-save" class="btn--1">
+                                <a id="submit-form" class="btn" type="submit">Save Task</a>
+                            </div>
+                            <h2 id="error-message"class="error-message">One or more fields are missing</h2>
+                        </form>
+                    </div>
+                    <div id="btn-cancel">
+                        <a id="cancel-form" class="btn btn-neg">Cancel</a>
+                    </div>
+                    <div id="btn-edit" class="btn--1">
+                        <a id="edit-form" class="btn" >Edit</a>
+                    </div>
+                    <div id="btn-delete">
+                        <a id="delete-form" class="btn btn-neg">Delete</a>
+                    </div>
+                </div>
+                
+            </div>
+
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <script src="/app.js"></script>
+</body>
+</html>
